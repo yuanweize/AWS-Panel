@@ -20,11 +20,14 @@ on:
   release:
     types: [ published ]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -60,7 +63,7 @@ jobs:
           for i in `ls ../build`; do mv ../build/$i ./; zip -r $i.zip *; mv $i.zip ../output/; rm -rf $i; done
           cd ..
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         if: ${{ !github.head_ref }}
         with:
           name: AWS-Panel_ALL
